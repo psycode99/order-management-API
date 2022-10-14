@@ -1,0 +1,68 @@
+{% include 'header.html' %}
+    <!-- Page Content -->
+    <!-- Heading Starts Here -->
+    <div class="page-heading header-text">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h1>Orders</h1>
+            <p><a href="index.html">Home</a> / <span>Orders</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Heading Ends Here -->
+
+
+    <!-- About Us Starts Here -->
+    <div class="about-us">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+              {% if orders == [] %}
+              <h1 class="text-muted">No Orders Made Yet</h1>
+              {% else %}
+                 {% for order in orders %}
+                  <p>Business Name: {{ order.business_name }}</p>
+                  <p>Customer Name: {{ order.customer_name }}</p>
+                  <p>Customer Address: {{ order.customer_address }}</p>
+                  <p>Product Name: {{ order.product_name }}</p>
+                  <p>Quantity: {{ order.quantity }}</p>
+                  <p>Time: {{ order.time }}</p>
+                  <a href="{{ url_for('del_order', id=order.id, business_name=order.business_name, api_key=order.api_key) }}"> <button class="btn btn-danger">Delete order</button> </a>
+                  <hr>
+                  <br>
+                  <br>
+                {% endfor %}
+              {% endif %}
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- About Us Ends Here -->
+
+
+    {% include 'footer.html' %}
+    <!-- Bootstrap core JavaScript -->
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+    <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Additional Scripts -->
+    <script src="/static/assets/js/custom.js"></script>
+    <script src="/static/assets/js/owl.js"></script>
+    <script src="/static/assets/js/accordions.js"></script>
+
+    <script language = "text/Javascript">
+      cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
+      function clearField(t){                   //declaring the array outside of the
+      if(! cleared[t.id]){                      // function makes it static and global
+          cleared[t.id] = 1;  // you could use true and false, but that's more typing
+          t.value='';         // with more chance of typos
+          t.style.color='#fff';
+          }
+      }
+    </script>
+
+  </body>
+</html>

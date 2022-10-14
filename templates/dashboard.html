@@ -1,0 +1,85 @@
+{% include 'header.html' %}
+    <!-- Page Content -->
+    <!-- Heading Starts Here -->
+    <div class="page-heading header-text">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h1>Welcome {{ name }}</h1>
+            <p><a href="index.html">Home</a> / <span>Dashboard</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Heading Ends Here -->
+
+
+    <!-- About Us Starts Here -->
+    <div class="about-us">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="left-image">
+              <img  src="/static/assets/images/our-team.jpg" alt="">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="right-content">
+
+              <div id='tabs'>
+                  <ul>
+                    <li><a href='#tabs-2'>Your Businesses</a></li>
+                    <li><a href='#tabs-3'>Your API key</a></li>
+                  </ul>
+                  <section class='tabs-content'>
+
+                    <article id='tabs-2' class="my-3 py-3">
+                      <ol>
+                      {% for business in businesses %}
+                      <li class="my-4">{{ business.business_name }}</li> <a href="{{ url_for('listings', business_name=business.business_name, api_key=api_key) }}"><button class="btn btn-primary">View Orders</button></a> <a href="{{ url_for('del_business', business_name=business.business_name, api_key=api_key, id=business.id ) }}"><button class="btn btn-danger">Delete Business</button></a>
+                      {% endfor %}
+                      </ol>
+                    </article>
+                    <article id='tabs-3' class="my-3 py-3">
+                      <h3 >Your API key</h3>
+                        <ul>
+                            <p class="py-2">API key: {{ api_key }}</p>
+                        </ul>
+                    </article>
+                  </section>
+
+              </div>
+                <a href="{{ url_for('business_reg', api_key=api_key) }}"> <button class="btn btn-primary my-2 ">Create New Business</button></a>
+                  <a href="https://documenter.getpostman.com/view/20358236/2s7YtQFvec"> <button class="btn btn-primary my-2  mx-2">API Documentation</button></a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- About Us Ends Here -->
+
+
+    {% include 'footer.html' %}
+    <!-- Bootstrap core JavaScript -->
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+    <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Additional Scripts -->
+    <script src="/static/assets/js/custom.js"></script>
+    <script src="/static/assets/js/owl.js"></script>
+    <script src="/static/assets/js/accordions.js"></script>
+
+    <script language = "text/Javascript"> 
+      cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
+      function clearField(t){                   //declaring the array outside of the
+      if(! cleared[t.id]){                      // function makes it static and global
+          cleared[t.id] = 1;  // you could use true and false, but that's more typing
+          t.value='';         // with more chance of typos
+          t.style.color='#fff';
+          }
+      }
+    </script>
+
+  </body>
+</html>
