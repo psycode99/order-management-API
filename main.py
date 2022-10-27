@@ -280,12 +280,20 @@ def order():
 def get_all_orders():
     api_key = request.args.get('api-key')
     business_name = request.args.get('business_name').title()
-    verify_api_key = Orders.query.filter_by(api_key=api_key).all()
+    verify_api_key = Users.query.filter_by(api_key=api_key).first()
+    verify_order = Orders.query.filter_by(api_key=api_key).all()
+    verify_business = Business.query.filter_by(api_key=api_key).all()
+    cors = []
+    for business in verify_business:
+        cors.append(business.business_name)
 
     if not verify_api_key:
         return jsonify(error='Invalid API key')
     else:
-        return jsonify(orders=[order.to_dict() for order in verify_api_key if order.business_name == business_name])
+        if business_name in cors:
+            return jsonify(orders=[order.to_dict() for order in verify_order if order.business_name == business_name])
+        else:
+            return jsonify(error='Wrong business name')
 
 
 @app.route('/all_businesses')
